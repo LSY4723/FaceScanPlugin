@@ -1,0 +1,19 @@
+{
+  "name": "cordova-plugin-guoan-facescan",
+  "version": "1.0.0",
+  "description": "人脸识别",
+  "cordova": {
+    "id": "FaceScanPlugin",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": "syliu",
+  "license": "Apache 2.0"
+}

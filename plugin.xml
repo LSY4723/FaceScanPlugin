@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="FaceScanPlugin" 
+		version="1.0.0" 
+		xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+		xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>FacePlugin</name>
+	<license>Apache 2.0</license>
+	<js-module name="FacePlugin" src="www/FacePlugin.js">
+		<clobbers target="cordova.plugins.FacePlugin" />
+	</js-module>
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="FacePlugin">
+				<param name="ios-package" value="org.apache.cordova.FaceScanPlugin.FacePlugin" />
+			</feature>
+		</config-file>
+		<source-file src="src/ios/FacePlugin.m" />
+	</platform>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="FacePlugin">
+				<param name="android-package" value="org.apache.cordova.FaceScanPlugin.FacePlugin" />
+			</feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml">
+			 <uses-permission android:name="android.permission.CAMERA"/>
+			 <uses-permission android:name="android.permission.VIBRATE" />
+			 <uses-permission android:name="android.permission.FLASHLIGHT"/>
+			 <uses-feature android:name="android.hardware.camera"/>
+			 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			  <uses-feature android:name="android.hardware.camera.flash"/> 
+		</config-file>
+		 <config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:clearTaskOnLaunch="true" 
+					  android:configChanges="orientation|keyboardHidden|screenSize" 
+					  android:exported="false" 
+					  android:name="org.apache.cordova.FaceScanPlugin.CustomCameraActivity"
+					  android:theme="@android:style/Theme.Light.NoTitleBar" 
+				      android:windowSoftInputMode="stateAlwaysHidden" />
+		 </config-file>
+		<source-file src="src/android/CustomCameraActivity.java" target-dir="src/org/apache/cordova/FaceScanPlugin" />
+		<source-file src="src/android/DrawFacesView.java" target-dir="src/org/apache/cordova/FaceScanPlugin" />
+		<source-file src="src/android/FacePlugin.java" target-dir="src/org/apache/cordova/FaceScanPlugin" />
+	</platform>
+</plugin>
