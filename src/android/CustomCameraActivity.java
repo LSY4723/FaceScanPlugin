@@ -334,7 +334,7 @@ public class CustomCameraActivity extends CordovaActivity {
         // 根据选出的PictureSize重新设置SurfaceView大小
         float w = pictureSize.width;
         float h = pictureSize.height;
-        parameters.setPictureSize(pictureSize.width/2, pictureSize.height/2);
+//        parameters.setPictureSize(pictureSize.width/2, pictureSize.height/2);
         parameters.set("orientation", "portrait");
         parameters.setRotation(270);
         surfaceView.setLayoutParams(new FrameLayout.LayoutParams((int) (height * (h / w)), height));
@@ -342,9 +342,9 @@ public class CustomCameraActivity extends CordovaActivity {
         // 获取摄像头支持的PreviewSize列表
         List<Camera.Size> previewSizeList = parameters.getSupportedPreviewSizes();
         Camera.Size preSize = getProperSize(previewSizeList, (float) height / width);
-        if (null != preSize) {
-            parameters.setPreviewSize(preSize.width, preSize.height);
-        }
+//        if (null != preSize) {
+//            parameters.setPreviewSize(preSize.width, preSize.height);
+//        }
         parameters.setJpegQuality(100);
         if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
             // 连续对焦

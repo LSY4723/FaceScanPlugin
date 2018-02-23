@@ -63,7 +63,8 @@ public class FacePlugin extends CordovaPlugin {
             final String data = byte2Base64String(datas);
             callbackContext.success(data);
         } else if(resultCode==Activity.RESULT_CANCELED){
-            this.faceScan(new JSONArray(), callbackContext);
+        	callbackContext.error("请检查相机相关权限是否打开！");
+           // this.faceScan(new JSONArray(), callbackContext);
         }else{
             Bundle extras = intent.getExtras();
             String strError = extras.getString(ERROR_MESSAGE);
