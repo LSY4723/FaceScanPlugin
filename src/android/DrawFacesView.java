@@ -9,13 +9,13 @@ import android.graphics.PorterDuff;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowManager;
 
 public class DrawFacesView extends View {
     private Matrix matrix;
     private Paint paint;
     private Camera.Face[] faces;
     private boolean isClear;
-
     public DrawFacesView(Context context) {
         this(context, null);
     }
@@ -32,10 +32,11 @@ public class DrawFacesView extends View {
     private void init() {
         paint = new Paint();
         paint.setColor(Color.GREEN);
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        //设置线条粗细
         paint.setStrokeWidth(12);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        //设置线条粗细
+        paint.setAlpha(250);
         faces = new Camera.Face[]{};
     }
 
@@ -45,13 +46,27 @@ public class DrawFacesView extends View {
         canvas.setMatrix(matrix);
         for (Camera.Face face : faces) {
             if (face == null) break;
-            canvas.drawRect(face.rect, paint);
+
             if (face.rightEye != null)
                 canvas.drawPoint(-face.rightEye.x, face.rightEye.y, paint);
             if (face.leftEye != null)
                 canvas.drawPoint(-face.leftEye.x, face.leftEye.y, paint);
             if (face.mouth != null)
                 canvas.drawPoint(-face.mouth.x, face.mouth.y, paint);
+            //左上方(第一行竖)
+            canvas.drawLine(-face.rightEye.x-200, face.rightEye.y+100, -face.rightEye.x-100, face.rightEye.y+100, paint);
+            //第二行横
+            canvas.drawLine(-face.rightEye.x-200, face.rightEye.y-100, -face.rightEye.x-200, face.rightEye.y+100, paint);
+//            //左下方
+            int i = Math.abs(face.rightEye.x) - Math.abs(face.mouth.x);
+            canvas.drawLine(-face.mouth.x+100, face.rightEye.y+100, -face.mouth.x, face.rightEye.y+100, paint);
+            canvas.drawLine(-face.mouth.x+100, face.rightEye.y-100, -face.mouth.x+100, face.rightEye.y+100, paint);
+            //右上方
+            canvas.drawLine(-face.leftEye.x-100, face.leftEye.y-100, -face.leftEye.x-200, face.leftEye.y-100, paint);
+            canvas.drawLine(-face.leftEye.x-200, face.leftEye.y+100, -face.leftEye.x-200, face.leftEye.y-100, paint);
+//            //右下方
+            canvas.drawLine(-face.mouth.x+100, face.leftEye.y-100, -face.mouth.x, face.leftEye.y-100, paint);
+            canvas.drawLine(-face.mouth.x+100, face.leftEye.y-100, -face.mouth.x+100, face.leftEye.y+100, paint);
         }
         if (isClear) {
             canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
