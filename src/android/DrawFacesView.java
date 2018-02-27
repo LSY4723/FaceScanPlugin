@@ -9,7 +9,6 @@ import android.graphics.PorterDuff;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.WindowManager;
 
 public class DrawFacesView extends View {
     private Matrix matrix;
@@ -32,11 +31,13 @@ public class DrawFacesView extends View {
     private void init() {
         paint = new Paint();
         paint.setColor(Color.GREEN);
-        paint.setStrokeWidth(12);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        //设置线条粗细
-        paint.setAlpha(250);
+        paint.setStrokeWidth(10);
+        //设置抗锯齿，如果不设置，加载位图的时候可能会出现锯齿状的边界，如果设置，边界就会变的稍微有点模糊，锯齿就看不到了。
+        paint.setAntiAlias(true);
+        //设置是否抖动，如果不设置感觉就会有一些僵硬的线条，如果设置图像就会看的更柔和一些
+        paint.setDither(true);
+        //设置画笔的透明度[0-255]，0是完全透明，255是完全不透明
+        paint.setAlpha(122);
         faces = new Camera.Face[]{};
     }
 
